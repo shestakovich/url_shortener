@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-4">
+                <form method="post" style="margin-top: 10px">
+                    <p>{{ form.errors }}</p>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Логин</label>
+                        <input name="username" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                               placeholder="Enter login">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                               placeholder="Email">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Пароль</label>
+                        <input name="password1" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Повторите пароль</label>
+                        <input name="password2" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
