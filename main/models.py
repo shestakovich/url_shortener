@@ -10,7 +10,7 @@ User = get_user_model()
 
 class Url(models.Model):
     short_url = models.CharField('Короткий URL', max_length=256, unique=True, primary_key=True)
-    original_url = models.URLField('Оригинальный URL', unique=True)
+    original_url = models.URLField('Оригинальный URL')
     creation_date = models.DateTimeField('Дата создания', auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='urls')
     number_of_visits = models.PositiveIntegerField(default=0)
