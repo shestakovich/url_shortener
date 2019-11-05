@@ -13,14 +13,16 @@ class Url(models.Model):
     original_url = models.URLField('Оригинальный URL', unique=True)
     creation_date = models.DateTimeField('Дата создания', auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='urls')
+    number_of_visits = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
-        short_url = get_random_string(settings.LENGTH_SHORT_URL)
-        for i in itertools.count(settings.LENGTH_SHORT_URL):
-            if not Url.objects.filter(short_url=short_url).exists():
-                break
-            short_url = get_random_string(i)
-        self.short_url = short_url
+        if not self.pk:
+            short_url = get_random_string(settings.LENGTH_SHORT_URL)
+            for i in itertools.count(settings.LENGTH_SHORT_URL):
+                if not Url.objects.filter(short_url=short_url).exists():
+                    break
+                short_url = get_random_string(i)
+            self.short_url = short_url
         super().save(*args, **kwargs)
 
     class Meta:

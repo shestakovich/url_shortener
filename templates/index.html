@@ -61,14 +61,24 @@
                 <tr>
                     <th scope="col">Исходная ссылка</th>
                     <th scope="col">Сокращенная ссылка</th>
+                    <th scope="col">Дата создания</th>
+
+                    <th scope="col">Кол-во переходов</th>
+
                     <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for url in urls %}
                     <tr>
-                        <td>{{ url.original_url }}</td>
+                        <td style="white-space: nowrap;overflow: hidden; text-overflow: ellipsis; max-width: 100px;"
+                            title="{{ url.original_url }}">{{ url.original_url }}</td>
                         <td>{{ site }}/{{ url.short_url }}</td>
+                        <td>{{ url.creation_date }}</td>
+                        <td>{{ url.number_of_visits }}</td>
+
+
+
                         <td>
                             <button class="btn btn-danger" form="remove_link" name="name" value="{{ url.short_url }}">
                                 Удалить

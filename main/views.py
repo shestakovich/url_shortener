@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django import forms
+from django.db.models import Q, F
 from django.http import HttpResponseBadRequest, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.views import View
@@ -28,11 +29,14 @@ class IndexView(View):
     def get(self, request):
         urls = None
         if request.user.is_authenticated:
-            urls = request.user.urls.values('original_url', 'short_url')
-        return render(request, 'index.html', {'urls': urls,
-                                              'site': settings.REDIRECT_DOMAIN if hasattr(settings, 'REDIRECT_DOMAIN') else request.get_host(),
-                                              'protocol': 'https' if request.is_secure() else 'http'})
+            urls = request.user.urls.values('original_url', 'short_url', 'number_of_visits', 'creation_date')
 
+        context = {
+            'urls': urls,
+            'site': settings.REDIRECT_DOMAIN if hasattr(settings, 'REDIRECT_DOMAIN') else request.get_host(),
+            'protocol': 'https' if request.is_secure() else 'http'
+        }
+        return render(request, 'index.html', context)
 
     def post(self, request):
         if not request.user.is_authenticated:
@@ -54,6 +58,7 @@ def redirect_to_original_url(request, url_code):
         url = Url.objects.get(short_url=url_code)
     except Url.DoesNotExist:
         return HttpResponseNotFound()
+    url.number_of_visits = F('number_of_visits') + 1
+    url.save()
+
     return redirect(url.original_url)
-
-

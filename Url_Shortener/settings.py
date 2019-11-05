@@ -25,7 +25,7 @@ SECRET_KEY = '7*7^ll$8c0rf1_vf5y==zc-d&qhae*tw=7=*_fk=uy7jt1^@)w'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'user_control',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +129,5 @@ LOGOUT_REDIRECT_URL = '/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 LENGTH_SHORT_URL = 6
+
+AUTH_USER_MODEL = 'user_control.User'
