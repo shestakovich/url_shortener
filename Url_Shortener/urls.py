@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render
 from django.urls import path, include
 from django.views.generic import TemplateView, FormView
 
+from main.views import IndexView, RemoveUrl, redirect_to_original_url
+
 User = get_user_model()
 
 
@@ -28,7 +30,9 @@ class RegistrationView(FormView):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='index.html')),
+    path('', IndexView.as_view(), name='home'),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/registration/', RegistrationView.as_view(), name='registration')
+    path('accounts/registration/', RegistrationView.as_view(), name='registration'),
+    path('remove_url/', RemoveUrl.as_view(), name='remove_url'),
+    path('<str:url_code>/', redirect_to_original_url),
 ]

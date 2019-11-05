@@ -12,7 +12,8 @@
                 <ul class="navbar-nav mr-auto">
                     {% if not user.is_authenticated %}
                         <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'login' %}">Войти <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="{% url 'login' %}">Войти <span
+                                    class="sr-only">(current)</span></a>
                         </li>
                     {% else %}
 
@@ -36,18 +37,25 @@
             </div>
         </nav>
 
-        <form>
+        <form method="post">{% csrf_token %}
             <div class="form-group">
                 <label for="exampleInputEmail1">Исходная ссылка</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                <input name="original_url" type="text" class="form-control" value="{{ original_url_value|default:"" }}"
+                       id="exampleInputEmail1" aria-describedby="emailHelp"
                        placeholder="example.com/long-link">
-                <small id="emailHelp" class="form-text text-muted">Вставте ссылку, которую нужно сократить</small>
+                {% if error_origin_url %}
+                    <small id="emailHelp" class="form-text text-danger">{{ error_origin_url }}</small>
+
+                {% else %}
+                    <small id="emailHelp" class="form-text text-muted">Вставте ссылку, которую нужно сократить</small>
+
+                {% endif %}
             </div>
             <button type="submit" class="btn btn-primary">Получить ссылку</button>
         </form>
 
         {% if user.is_authenticated %}
-            <form id="remove_link" method="post">{% csrf_token %}</form>
+            <form id="remove_link" method="post" action="{% url 'remove_url' %}">{% csrf_token %}</form>
             <table class="table table-bordered" style="margin-top: 10px">
                 <thead>
                 <tr>
@@ -60,7 +68,7 @@
                 {% for url in urls %}
                     <tr>
                         <td>{{ url.original_url }}</td>
-                        <td>{{ protocol }}{{ site_url }}{{ url.short_url }}</td>
+                        <td>{{ site }}/{{ url.short_url }}</td>
                         <td>
                             <button class="btn btn-danger" form="remove_link" name="name" value="{{ url.short_url }}">
                                 Удалить
