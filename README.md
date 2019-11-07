@@ -8,4 +8,5 @@ Install dependencies:
 
 Run dev server:
 
+    manage.py migrate
     manage.py runserver 8000
