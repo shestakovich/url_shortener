@@ -101,6 +101,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-LENGTH_SHORT_URL = 6
+LENGTH_SHORT_URL = 2  # длянна кодовой части урла
+LENGTH_SHORT_URL_FIXED = False  # может ли изменяться длянна урла при наличии совпадений
 
 AUTH_USER_MODEL = 'user_control.User'

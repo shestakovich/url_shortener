@@ -17,11 +17,12 @@ class Url(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            short_url = get_random_string(settings.LENGTH_SHORT_URL)
-            for i in itertools.count(settings.LENGTH_SHORT_URL):
+            url_len = settings.LENGTH_SHORT_URL
+            short_url = get_random_string(url_len)
+            for i in itertools.count(url_len):
                 if not Url.objects.filter(short_url=short_url).exists():
                     break
-                short_url = get_random_string(i)
+                short_url = get_random_string(url_len if settings.LENGTH_SHORT_URL_FIXED else i)
             self.short_url = short_url
         super().save(*args, **kwargs)
 
