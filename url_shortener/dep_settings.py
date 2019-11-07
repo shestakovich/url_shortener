@@ -4,15 +4,15 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['shortener.com']
 
-SECRET_KEY = '7*7^ll$8c0rf1_vf5y==zc-d&qhae*tw=7=*_fk=uy7jt1^@)w'
+SECRET_KEY = os.environ['URL_SHORTENER_SECRET_KEY']
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_db',
-        'USER': 'user_name',
-        'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
+        'NAME': os.environ['URL_SHORTENER_DB_NAME'],
+        'USER': os.environ['URL_SHORTENER_DB_USER'],
+        'PASSWORD': os.environ['URL_SHORTENER_DB_PASSWORD'],
+        'HOST': os.environ['URL_SHORTENER_DB_HOST'],
+        'PORT': os.environ['URL_SHORTENER_DB_PORT'],
     }
 }

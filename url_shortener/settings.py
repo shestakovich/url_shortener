@@ -2,7 +2,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = '7*7^ll$8c0rf1_vf5y==zc-d&qhae*tw=7=*_fk=uy7jt1^@)w'
+SECRET_KEY = os.environ.get('SECRET_KEY', '7*7^ll$8c0rf1_vf5y==zc-d&qhae*tw=7=*_fk=uy7jt1^@)w')
 
 DEBUG = True
 
